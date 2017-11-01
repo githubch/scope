@@ -24,6 +24,7 @@ import { isPausedSelector } from '../selectors/time-travel';
 import { activeTopologyZoomCacheKeyPathSelector } from '../selectors/zooming';
 import { timestampsEqual } from '../utils/time-utils';
 import { applyPinnedSearches } from '../utils/search-utils';
+import { deserializeTimestamp } from '../utils/web-api-utils';
 import {
   findTopologyById,
   setTopologyUrlsById,
@@ -694,6 +695,9 @@ export function rootReducer(state = initialState, action) {
         pinnedMetricType: action.state.pinnedMetricType
       });
       state = state.set('topologyViewMode', action.state.topologyViewMode);
+      if (action.state.pausedAt) {
+        state = state.set('pausedAt', deserializeTimestamp(action.state.pausedAt));
+      }
       if (action.state.gridSortedBy) {
         state = state.set('gridSortedBy', action.state.gridSortedBy);
       }

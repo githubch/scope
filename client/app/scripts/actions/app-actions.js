@@ -582,6 +582,7 @@ export function resumeTime() {
       dispatch({
         type: ActionTypes.RESUME_TIME
       });
+      updateRoute(getState);
       // After unpausing, all of the following calls will re-activate polling.
       getTopologies(getState, dispatch);
       getNodes(getState, dispatch, true);
@@ -597,6 +598,7 @@ export function startTimeTravel() {
     dispatch({
       type: ActionTypes.START_TIME_TRAVEL
     });
+    updateRoute(getState);
     if (!getState().get('nodesLoaded')) {
       getNodes(getState, dispatch);
       if (isResourceViewModeSelector(getState())) {
@@ -623,6 +625,7 @@ export function jumpToTime(timestamp) {
       type: ActionTypes.JUMP_TO_TIME,
       timestamp,
     });
+    updateRoute(getScopeState);
     getNodes(getScopeState, dispatch);
     getTopologies(getScopeState, dispatch);
     if (isResourceViewModeSelector(getScopeState())) {
