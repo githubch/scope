@@ -87,7 +87,7 @@ export const initialState = makeMap({
   topologyOptions: makeOrderedMap(), // topologyId -> options
   topologyUrlsById: makeOrderedMap(), // topologyId -> topologyUrl
   topologyViewMode: GRAPH_VIEW_MODE,
-  version: '...',
+  version: null,
   versionUpdate: null,
   // Set some initial numerical values to prevent NaN in case of edgy race conditions.
   viewport: makeMap({ width: 0, height: 0 }),
@@ -388,7 +388,7 @@ export function rootReducer(state = initialState, action) {
     case ActionTypes.START_TIME_TRAVEL: {
       state = state.set('showingTimeTravel', true);
       state = state.set('timeTravelTransitioning', false);
-      return state.set('pausedAt', nowInSecondsPrecision());
+      return state.set('pausedAt', action.timestamp || nowInSecondsPrecision());
     }
 
     case ActionTypes.JUMP_TO_TIME: {
